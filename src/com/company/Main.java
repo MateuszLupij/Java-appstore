@@ -16,9 +16,6 @@ public class Main {
             if(i == 1){
                 System.out.println("Kolejna tura " + Skills.WORDPRESS);
 
-
-
-
             } else {
                 System.out.println("========== GRA SIĘ KONCZY");
                 ingame = false;
