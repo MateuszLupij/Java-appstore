@@ -1,6 +1,7 @@
 package com.company;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 public class Project {
 
@@ -10,10 +11,11 @@ public class Project {
     LocalDate dateOfDelivery;
     double penaltyForNotReturningTheProject;
     double price;
-    LocalDate deadlineForPayment;
+    int deadlineForPayment;
     ProjectAdvancementLvl projectAdvancementLvl;
+    Skills projectType;
 
-    public Project(String projectName, int numberOfDaysToFinish, Client client, LocalDate dateOfDelivery, double penaltyForNotReturningTheProject, double price, LocalDate deadlineForPayment, ProjectAdvancementLvl projectAdvancementLvl) {
+    public Project(String projectName, int numberOfDaysToFinish, Client client, LocalDate dateOfDelivery, double penaltyForNotReturningTheProject, double price, int deadlineForPayment, ProjectAdvancementLvl projectAdvancementLvl) {
         ProjectName = projectName;
         this.numberOfDaysToFinish = numberOfDaysToFinish;
         this.client = client;
@@ -22,23 +24,25 @@ public class Project {
         this.price = price;
         this.deadlineForPayment = deadlineForPayment;
         this.projectAdvancementLvl = projectAdvancementLvl;
+        projectType = genProjectType();
     }
 
 
-    /*public Project(String projectName, ProjectAdvancementLvl[] projectTypes, Integer amountOfWorkDays, ProjectAdvancementLvl[] improveYourself) {
-        this.ProjectName = projectName;
-        this.projectTypes = projectTypes;
-        this.amountOfWorkDays = amountOfWorkDays;
-        this.improveYourself = improveYourself;
+    private Skills genProjectType(){
+        int randomNumber = new Random().nextInt(Skills.values().length);
+        return Skills.values()[randomNumber];
     }
 
-    ProjectAdvancementLvl [] projectTypes;
-    Integer amountOfWorkDays;
-    ProjectAdvancementLvl[] improveYourself;*/
+    public Client getClient() {
+        return client;
+    }
 
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Project{" +
+                "ProjectName='" + ProjectName + '\'' +
+                ", numberOfDaysToFinish=" + numberOfDaysToFinish +
+                ", client=" + client +
+                '}';
+    }
 }

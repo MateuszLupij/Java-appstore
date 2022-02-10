@@ -2,7 +2,7 @@ package com.company;
 
 public class Programmer extends Worker{
     public Programmer(String name) {
-        super(name);
+        super(name, 30);
     }
 
     double knowledge = 100;
