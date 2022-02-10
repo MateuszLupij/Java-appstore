@@ -1,7 +1,7 @@
 package com.company;
 
-public class Laid_Back extends Client{
-    public Laid_Back(String name) {
+public class LaidBack extends Client{
+    public LaidBack(String name) {
         super(name);
     }
 
