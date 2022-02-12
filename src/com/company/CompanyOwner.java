@@ -1,5 +1,8 @@
 package com.company;
 
+import com.company.client.Client;
+import com.company.workers.Worker;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +15,11 @@ public class CompanyOwner {
     List<Worker> listOfWorkers = new ArrayList<>();
     List<Project> listOfProjects = new ArrayList<>();
     List<Client>  listOfClient = new ArrayList<>();
+
+
+
+    int daysForZus = 0;
+
 
     public CompanyOwner(String ownerName, String ownerSurname, Double cash) {
         this.ownerName = ownerName;
@@ -98,4 +106,13 @@ public class CompanyOwner {
     public void setListOfClient(List<Client> listOfClient) {
         this.listOfClient = listOfClient;
     }
+
+    public int getDaysForZus() {
+        return daysForZus;
+    }
+
+    public void setDaysForZus(int daysForZus) {
+        this.daysForZus = daysForZus;
+    }
+
 }

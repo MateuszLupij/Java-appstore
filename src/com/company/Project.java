@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.client.Client;
+
 import java.time.LocalDate;
 import java.util.Random;
 

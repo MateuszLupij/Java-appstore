@@ -1,12 +1,18 @@
 package com.company;
 
+import com.company.client.*;
+import com.company.workers.*;
+
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
 import java.util.*;
 
 public class Main {
 
     static List<Project> listOfProjects = genFirstThreeProjects();
     static List<Client> listOfClients = getClientsFromProducts();
+    static List<Worker> workersList = getListOfWorkers();
 
     public static void main(String[] args) {
 
@@ -19,10 +25,12 @@ public class Main {
 
         Project pierwszProjekt = new Project("My first project", 1, firstClientLaid,
                 LocalDate.of(2022, 2, 1), 150.00, 400.00, 15, ProjectAdvancementLvl.MEDIUM);
-
+        firstClientLaid.project = pierwszProjekt;
         LocalDate localDate = LocalDate.of(2020, 1, 1);
+        Month month = localDate.getMonth();
+
         CompanyOwner me = new CompanyOwner("Mateusz", "Loopy", 10000.00);
-        me.addProjectToList(pierwszProjekt);
+        me.addClientToList(firstClientLaid);
 
 
         List<Client> clientsForAgame = new ArrayList<>();
@@ -45,14 +53,17 @@ public class Main {
             System.out.println("7. Fire the employee");
             System.out.println("8. Spend a day for a pepper settlements with the offices(You have to spent at least 2 days in a month for taxes pepper, if not, they will hunt you down)");
             System.out.println("9. EXIT ");
+            System.out.print("====CHOSE THE ACTION==> ");
             int i = scanner.nextInt();
+
             Random ramd = new Random();
             switch (i) {
                 case 1:
                     System.out.println("=======SIGN A CONTRACT FOR PROJECT=======");
                     int counter = 1;
-                    System.out.println("Choose project from the list");
-                    for (Project p: listOfProjects) {
+                    System.out.println("Choose project from the list of your clients");
+                    List<Project> listOfYourClientsProjects = getListOfYourClients(me);
+                    for (Project p: listOfYourClientsProjects) {
                         System.out.println(counter+". "+p.ProjectName + " price" + p.price + " for client:" + p.client.name);
                         counter++;
                     }
@@ -62,8 +73,18 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("=======ADD CLIENT to a LIST========");
-                    me.addClientToList(clientsForAgame.get(ramd.nextInt()));
-                    System.out.println(me.getListOfClient());
+                    if(clientsForAgame.size() == 1) {
+
+
+                        me.addClientToList(clientsForAgame.get(0));
+                        System.out.println(me.getListOfClient());
+                    }else if(clientsForAgame.size() > 1){
+                        me.addClientToList(clientsForAgame.get(ramd.nextInt(clientsForAgame.size() -1)));
+                        System.out.println(me.getListOfClient());
+                    } else {
+                        System.out.println("There are not clients available for your at the moment wait" + (counterTur % 5) + " days for next client");
+                    }
+
                     break;
                 case 3:
                     System.out.println("======SPEND DAY FOR A PROGRAMMING=======");
@@ -89,15 +110,30 @@ public class Main {
 
                     }
                     if (size == me.listOfProjects.size()) {
-                        System.out.println("There is no project to work on them, you lost a day :( ");
+                        System.out.println("There is finished project to sign off - you lost a day :( ");
                     }
 
                     break;
                 case 6:
-                    int size1 = me.getListOfWorkers().size();
+
+                    System.out.println("===AVAILABLE WORKERS===");
+                    int workerCounter = 1;
+                    for (Worker worker: workersList) {
+                        System.out.println(workerCounter + ". " + worker.name + " " + worker.payDay + " " + worker.getClass().getSimpleName());
+                        workerCounter++;
+                    }
+                    System.out.println("=====CHOSE WORKER TO HIRE=====");
+                    Scanner scannerWorker = new Scanner(System.in);
+                    int choosenWorker = scannerWorker.nextInt();
+
+                    me.getListOfWorkers().add(workersList.get(choosenWorker-1));
+                    workersList.remove(choosenWorker-1);
+
+
+                    /*int size1 = me.getListOfWorkers().size();
                     Worker worker = new Worker("Employee " + size1, 30);
                     me.getListOfWorkers().add(worker);
-                    System.out.println("You employed " + worker.name + " for " + worker.payDay);
+                    System.out.println("You employed " + worker.name + " for " + worker.payDay);*/
                     break;
                 case 7:
                     int counterWorker = 1;
@@ -113,6 +149,9 @@ public class Main {
                     me.listOfWorkers.remove(indexDousuniecia.nextInt()-1);
 
                     break;
+                case 8:
+                    me.setDaysForZus(me.getDaysForZus()+1);
+                    break;
                 case 9:
 
                     System.out.println("========== END OF THE GAME============");
@@ -120,7 +159,18 @@ public class Main {
                     break;
             }
 
+            int monthValue = localDate.getMonthValue();
             localDate = localDate.plusDays(1);
+            int monthValueAfterChange = localDate.getMonthValue();
+            if(monthValue != monthValueAfterChange){
+                if(me.getDaysForZus() < 2){
+                    System.out.println("=========BRANKRUT=======");
+                    ingame = false;
+                    break;
+                }else {
+                    System.out.println("ZUS DOES NOT HAVE ANY OBJECTIVES");
+                }
+            }
             counterTur++;
             double toPay = countFixedCosts(me);
             if (me.cash < toPay) {
@@ -133,7 +183,18 @@ public class Main {
                 Random rand = new Random();
                 clientsForAgame.add(listOfClients.get(rand.nextInt(listOfClients.size() - 1)));
             }
+
         }
+    }
+
+    private static  List<Project> getListOfYourClients(CompanyOwner owner) {
+        List<Client> listOfClient = owner.getListOfClient();
+        List<Project> listOfProjectOfMyClients  = new ArrayList<>();
+        for (Client client:listOfClient) {
+            listOfProjectOfMyClients.add(client.project);
+
+        }
+        return  listOfProjectOfMyClients;
     }
 
     private static double countFixedCosts(CompanyOwner boss) {
@@ -162,8 +223,6 @@ public class Main {
         Cautious cautious = new Cautious("Jojo");
         Dominant dominant = new Dominant("Rage");
         Inexperienced inexperienced = new Inexperienced("Baby Drive");
-
-
 
         Project project1 = new Project("Computer App", 1, demanding, LocalDate.of(2022, 1, 15), 50000.0, 50000.0, 30, ProjectAdvancementLvl.EASY);
         demanding.project = project1;
@@ -233,6 +292,28 @@ public class Main {
         return listClient;
 
 
+    }
+
+    public static List<Worker> getListOfWorkers(){
+
+        Worker businessAnalytics = new BusinessAnalytic("Roman");
+        Worker devOps = new DevOps("Wojtek");
+        Worker program = new Programmer("Ilona");
+        Worker seller = new Seller("Kasia");
+        Worker softwareArchitect = new SoftwareArchitect("Adam");
+        Worker tester = new Tester("Krystian");
+        Worker trainee = new Trainee("Magda");
+
+        List<Worker> listOfWorkers = new ArrayList<>();
+        listOfWorkers.add(businessAnalytics);
+        listOfWorkers.add(devOps);
+        listOfWorkers.add(program);
+        listOfWorkers.add(seller);
+        listOfWorkers.add(softwareArchitect);
+        listOfWorkers.add(tester);
+        listOfWorkers.add(trainee);
+
+        return listOfWorkers;
     }
 
 
