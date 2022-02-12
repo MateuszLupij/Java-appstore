@@ -5,7 +5,7 @@ public class Nerd extends Student{
         super(name);
     }
 
-    double theMostExpensiveStudent = 100; // Najdroższy student
+    double theMostExpensiveStudent = 100;
     double accurate = 100;
     double punctual= 100;
     double TheCheapest = 0;

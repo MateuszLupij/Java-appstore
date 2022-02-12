@@ -2,10 +2,6 @@ package com.company;
 
 public class Student {
 
-    //Nerd
-    //Average
-    //Egocentric
-
     String name;
 
     public Student(String name) {

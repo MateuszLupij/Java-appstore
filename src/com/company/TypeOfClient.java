@@ -4,7 +4,11 @@ public enum TypeOfClient {
 
     LAID_BACK(30,20,0,0,0),
     DEMANDING(0,0,50,0,0),
-    SQ(30,0,100, 5,1);
+    SQ(30,0,100, 5,1),
+    Cautious(15,10,50,50,10),
+    Dominant(50,0,100,50,0),
+    Inexperienced(0,100,0,0,0);
+
 
 
     int chanceOfDelay;

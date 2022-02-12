@@ -17,7 +17,7 @@ public class Main {
         int counterTur = 1;
         LaidBack firstClientLaid = new LaidBack("Intel");
 
-        Project pierwszProjekt = new Project("Pierwszy projekt", 1, firstClientLaid,
+        Project pierwszProjekt = new Project("My first project", 1, firstClientLaid,
                 LocalDate.of(2022, 2, 1), 150.00, 400.00, 15, ProjectAdvancementLvl.MEDIUM);
 
         LocalDate localDate = LocalDate.of(2020, 1, 1);
@@ -156,20 +156,34 @@ public class Main {
     private static List<Project> genFirstThreeProjects() {
         List<Project> listOfProjects = new ArrayList<>();
 
-        Demanding demaning = new Demanding("Optimus");
+        Demanding demanding = new Demanding("Optimus");
         LaidBack laidBack = new LaidBack("CCI");
         SQ sq = new SQ("CD-Project");
+        Cautious cautious = new Cautious("Jojo");
+        Dominant dominant = new Dominant("Rage");
+        Inexperienced inexperienced = new Inexperienced("Baby Drive");
 
 
-        Project project1 = new Project("Computer App", 1, demaning, LocalDate.of(2022, 1, 15), 50000.0, 50000.0, 30, ProjectAdvancementLvl.EASY);
-        demaning.project = project1;
+
+        Project project1 = new Project("Computer App", 1, demanding, LocalDate.of(2022, 1, 15), 50000.0, 50000.0, 30, ProjectAdvancementLvl.EASY);
+        demanding.project = project1;
         Project project2 = new Project("App for the town Hall ", 1, laidBack, LocalDate.of(2022, 5, 4), 180000.0, 320000.0, 60, ProjectAdvancementLvl.MEDIUM);
         laidBack.project = project2;
         Project project3 = new Project("APP for NASA", 1, sq, LocalDate.of(2022, 4, 1), 500000.0, 1500000.0, 21, ProjectAdvancementLvl.HARD);
         sq.project = project3;
+        Project project4 = new Project("Toilet app",10,cautious,LocalDate.of(2022,1,10),5000.0,10000,10,ProjectAdvancementLvl.EASY);
+        cautious.project = project4;
+        Project project5 = new Project("Cleaning app", 10,dominant,LocalDate.of(2022,3,1),1000, 5000,10,ProjectAdvancementLvl.EASY);
+        dominant.project = project5;
+        Project project6 = new Project("Driving app", 2,inexperienced,LocalDate.of(2022,1,15),1,100, 10,ProjectAdvancementLvl.EASY);
+        inexperienced.project = project6;
+
         listOfProjects.add(project1);
         listOfProjects.add(project2);
         listOfProjects.add(project3);
+        listOfProjects.add(project4);
+        listOfProjects.add(project5);
+        listOfProjects.add(project6);
 
 
         return listOfProjects;
@@ -194,7 +208,7 @@ public class Main {
         List<Client> listClient = new ArrayList<>();
 
         //Project project1 = new Project("Computer App", 60, new Client("Januszex Limited"), LocalDate.of(2022, 1, 15), 50000.0, 50000.0, 30, ProjectAdvancementLvl.EASY);
-        Client demaning = new Demanding("Optimus");
+        Client demanding = new Demanding("Optimus");
 
 
         //Project project2 = new Project("App for the town Hall ", 180, new Client("Town Hall of Gdansk"), LocalDate.of(2022, 5, 4), 180000.0, 320000.0, 60, ProjectAdvancementLvl.MEDIUM);
@@ -203,11 +217,17 @@ public class Main {
 
         //Project project3 = new Project("APP for NASA", 365, new Client("National Aeronautics and Space Administration"), LocalDate.of(2022, 4, 1), 500000.0, 1500000.0, 21, ProjectAdvancementLvl.HARD);
         Client sq = new SQ("CD-Project");
+        Client cautious = new Cautious("Jojo");
+        Client dominant = new Dominant("Rage");
+        Client inexperienced = new Inexperienced("Baby Drive");
 
 
-        listClient.add(demaning);
+        listClient.add(demanding);
         listClient.add(laidBack);
         listClient.add(sq);
+        listClient.add(cautious);
+        listClient.add(dominant);
+        listClient.add(inexperienced);
 
 
         return listClient;
